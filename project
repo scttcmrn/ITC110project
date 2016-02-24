@@ -1,0 +1,39 @@
+from flask import Flask, request, url_for
+import random
+
+app = Flask(__name__)
+app.secret_key = 'This is really unique and secret'
+
+@app.route('/')
+def hello_person():
+    return """
+        <p>What is your name?</p>
+        <form method="POST" action="%s"><input name="person" /><input type="submit" value="Continue" /></form>
+        """ % (url_for('greet'),)
+
+@app.route('/greet', methods=['POST'])
+def greet():
+    greet = random.choice(["Welcome", "Hello", "Greetings", "Hi"])
+    return """
+        <p>%s, %s!</p>
+        <p><a href="%s">Begin</a></p>
+        """ % (greet, request.form["person"], url_for('intro'))
+
+@app.route('/intro')
+def intro():
+    intro = "This is the introduction page"
+    return """
+        <p>%s</p>
+        <p><a href="%s">option one</a></p>
+        <p><a href="%s">option two</a></p>
+        """ % (intro, url_for('static', filename='option1'), url_for('static', filename='option2'))
+
+@app.route('/static/option1')
+def option1():
+    option1 = "This is the result of option one."
+    return "<p>%s</p>" % (option1)
+
+@app.route('/static/option2')
+def option2():
+    option2 = "This is the result of option two."
+    return "<p>%s</p>" % (option2)
