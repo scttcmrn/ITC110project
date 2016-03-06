@@ -31,7 +31,15 @@ def greet():
 def intro():
     global personne
     intro = """
-        <body style="margin:60;padding:0">
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
         <p>As you wander into the wood you're shaking your head in disbelief...
         kicked out of yet another pub for involvement in a brawl....nevermind the fact that
         you actually started it!</p>
@@ -50,12 +58,31 @@ def intro():
         of these two items.</p>
 
         <p>Will you pick up the hatchet, or inspect the apples?</p>
+        </div>
         </body>
         """
     return """
-        <p>%s, %s</p>
-        <p><a href="%s">Pick up the hatchet.</a></p>
-        <p><a href="%s">Inspect the apples.</a></p>
+        <body>
+        <style>
+        #2{
+        width:640px;
+        }
+        .player{
+        text-align:center;
+        }
+        .link1{
+        text-align:center;
+        }
+        .link2{
+        text-align:center;
+        }
+        </style>
+        <div id="2">
+        <p class="player">%s, %s</p>
+        <p class="link1"><a href="%s">Pick up the hatchet.</a></p>
+        <p class="link2"><a href="%s">Inspect the apples.</a></p>
+        </div>
+        </body>
         """ % (personne, intro, url_for('static', filename='option1'), url_for('static', filename='option2'))
 
 @app.route('/static/option1')
