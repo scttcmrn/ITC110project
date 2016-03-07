@@ -5,13 +5,34 @@ app = Flask(__name__)
 app.secret_key = 'This is really unique and secret'
 
 personne = ''
+spaces3 = """
+
+
+        """
 
 @app.route('/')
 def hello_person():
     return """
         <body style="margin:60;padding:0">
-        <p>What is your name?</p>
-        <form method="POST" action="%s"><input name="person" /><input type="submit" value="Continue" /></form>
+        <style>
+        #1{
+        width:640px;
+        margin:0 auto;
+        }
+        .yourname{
+        width:640px;
+        margin:0 auto;
+        }
+        .form1{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="1">
+        <p class="yourname">What is your name?</p>
+        <p class="break"> </p>
+        <form class="form1" method="POST" action="%s"><input name="person" /><input type="submit" value="Continue" /></form>
+        </div>
         </body>
         """ % (url_for('greet'),)
 
@@ -22,14 +43,32 @@ def greet():
     greet = random.choice(["Welcome", "Hello", "Greetings", "Hi"])
     return """
         <body style="margin:60;padding:0">
-        <p>%s, %s!</p>
-        <p><a href="%s">Click here to begin your journey...</a></p>
+        <style>
+        #3{
+        width:640px;
+        margin:0 auto;
+        }
+        .namegreet{
+        width:640px;
+        margin:0 auto;
+        }
+        .link{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="3">
+        <p class="namegreet">%s, %s!</p>
+        <p class="break"> </p>
+        <p class="link"><a href="%s">Click here to begin your journey...</a></p>
+        </div>
         </body>
         """ % (greet, personne, url_for('intro'))
 
 @app.route('/intro')
 def intro():
     global personne
+    global spaces3
     intro = """
         <body>
         <style>
@@ -66,19 +105,23 @@ def intro():
         <style>
         #2{
         width:640px;
+        margin:0 auto;
         }
         .player{
-        text-align:center;
+        width:640px;
+        margin:0 auto;
         }
         .link1{
-        text-align:center;
+        width:640px;
+        margin:0 auto;
         }
         .link2{
-        text-align:center;
+        width:640px;
+        margin:0 auto;
         }
         </style>
         <div id="2">
-        <p class="player">%s, %s</p>
+        <p class="player">%s,%s</p>
         <p class="link1"><a href="%s">Pick up the hatchet.</a></p>
         <p class="link2"><a href="%s">Inspect the apples.</a></p>
         </div>
@@ -88,7 +131,15 @@ def intro():
 @app.route('/static/option1')
 def option1():
     option1 = """
-        <body style="margin:60;padding:0">
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
         <p>You pick up the hatchet and realize that it was lying in a pile of what could only be
         the fecal matter of some bovine creature, perhaps <i>bos primigenius namadicus,</i> more commonly known as the
         Indian auroch. How a heap of excrement from an extinct bovine known only to have lived in south Asia before
@@ -103,6 +154,7 @@ def option1():
         taking either action you will immediately forget what your other option was.</p>
 
         <p>How shall you proceed?</p>
+        </div>
         </body>
         """
     return "<p>%s</p>" % (option1)
@@ -112,14 +164,31 @@ def option2():
     global personne
     option2 = """
         <body style="margin:60;padding:0">
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
         <font size="24" color="red">SURPRISE PIPE BOMB!</font>
 
         <p>You explode into a thousand pieces.</p>
+        </div>
         </body>
         """
     return """
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
         <p>%s</p>
         <p>Nice going, %s.</p>
+        </div>
         """ % (option2, personne)
 
 if __name__ == '__main__':
