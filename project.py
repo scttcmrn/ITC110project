@@ -199,6 +199,8 @@ def option1():
 def option11():
     global health
     health = health - 1
+    global mushroom
+    mushroom = 0
 
     option11 = """
         <body>
@@ -643,6 +645,8 @@ def hosp2():
 @app.route('/static/option122')
 def option122():
     global health
+    global mushroom
+    mushroom = 1
     option122 = """
         <body>
         <style>
