@@ -406,7 +406,7 @@ def option112():
 def option12():
     global personne
     global mushroom
-    mushroom = mushroom + 1
+    mushroom = 1
     global health
     health = health - 25
 
@@ -556,7 +556,10 @@ def hosp1():
         A doctor comes in to check on you, notices you have awakened, and sits down beside you. They
         say your immune system has been severely damaged, most likely due to poisoning by ingesting
         a particular type of wild mushroom, and that you also have a serious case of salmonellosis.</p>
-        <p>
+        <p>You soon fall into a coma. You dream of strange creatures plucking you from your home, drugging
+        you, and placing you in a large zoo-like pen, surrounded by high walls painted to resemble a thick forest.</p>
+        <p>You awaken. The room is empty. You sluggishly attempt to stand but your legs are weak and you collapse to
+        the floor. You could attempt to exit the room or just stay there and rest.</p>
         </div>
         </body>
         """
@@ -583,7 +586,111 @@ def hosp1():
         <div id="wrapper">
         <p class="text">%s</p>
         <p class="healthval"><font color="green">Health: %i</font></p>
-        """ % (hosp1, health)
+        <p class="link1"><a href="%s">Leave the room.</a></p>
+        <p class="link2"><a href="%s">Stay and rest.</a></p>
+        """ % (hosp1, health, url_for('static', filename='hosp11'), url_for('static', filename='hosp12'))
+
+@app.route('/static/hosp11')
+def hosp11():
+    global health
+    health = health - 201
+    hosp11 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>You decide to exit the room.</p>
+        <p>You stand up, legs wobbly, and open the door. Outside is a large, empty corridor.
+        You begin to make your way down the corridor and accidentally trip over a trash can.
+        <font color="red">(Health - 1)</font></p> As you pick yourself up you hear crashing
+        sounds approaching.</p>
+        <p><font size="10">IT'S A GIANT EEL!</font></p>
+        <p>It slithers its way towards you and promptly bites your head off.<font color="red">(Health - 200)</font></p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="red">Health: %i</font></p>
+        <p>You have died. The end.
+        """ % (hosp11, health)
+
+@app.route('/static/hosp12')
+def hosp12():
+    global health
+    health = health - 74
+    hosp12 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>You decide to stay and rest and climb back into the hospital bed. You can hear a noise coming
+        from outside the room... Must be hospital staff going about their work.</p>
+        <p>You then see a shadow pass under the door. Maybe someone is coming to check on you. Out of
+        curiosity, you stand up with wobbly legs and open the door to peek outside.</p>
+        <p><font size="10">IT'S A GIANT EEL!</font></p>
+        <p>Terrified, you slam the door closed and lock it. The eel pounds against the door repeatedly in
+        an attempt to reach you, possibly to consume your flesh!</p>
+        <p>Too afraid to move, you spend the rest of your life trapped in that hospital room, until you
+        eventually die of dehydration and starvation. <font color="red">(Health - 74)</font></p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="red">Health: %i</font></p>
+        <p>You have died. The end.</p>
+        """ % (hosp12, health)
 
 @app.route('/static/hosp2')
 def hosp2():
@@ -613,7 +720,6 @@ def hosp2():
         <p>You spend the rest of your life paralyzed and bed-ridden, slowly being butchered until your body can no
         longer sustain life. <font color="red">(Health - 38)</font></p>
         If only you had eaten that mushroom, your life may have turned out better. Oh, well.</p>
-        <p>You die of
         </div>
         </body>
         """
@@ -639,7 +745,8 @@ def hosp2():
         </style>
         <div id="wrapper">
         <p class="text">%s</p>
-        <p class="healthval"><font color="green">Health: %i</font></p>
+        <p class="healthval"><font color="red">Health: %i</font></p>
+        <p>You died. The end.</p>
         """ % (hosp2, health)
 
 @app.route('/static/option122')
