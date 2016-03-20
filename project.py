@@ -84,9 +84,9 @@ def intro():
 
         </style>
         <div id="wrapper">
-        <p>As you wander into the wood you're shaking your head in disbelief...
-        kicked out of yet another pub for involvement in a brawl....nevermind the fact that
-        you actually started it!</p>
+        <p>As you wander out of town and into the woods you're shaking your head in disbelief...
+        Kicked out of yet another pub for involvement in a brawl... Nevermind the fact that
+        you started it!</p>
 
         <p>While lost deeply in disgust and muttering to yourself you have failed to notice that
         the woods have become much thicker, the undergrowth sparse, the trees very large, and very
@@ -94,7 +94,7 @@ def intro():
         <font color="red">(Health - 1)</font></p>
 
         <p>You pick yourself up and dust off your nether regions, pleased to note the only damage
-        is to your pride. You glance around and see to your right what appears to be a lovely
+        is to your pride. <font color="orange">(Pride - 1)</font> You glance around and see to your right what appears to be a lovely
         meadow. You leave the relative safety of the path and head toward green grass and sunshine.</p>
 
         <p>The meadow is not large and in the center is a flat rock approximately 4 feet in diameter. On the
@@ -242,6 +242,7 @@ def option11():
         <div id="wrapper">
         <p class="text">%s</p>
         <p class="healthval"><font color="green">Health: %i</font></p>
+        <p class="asdasd">Without time to think about how eels are able to traverse land, you:</p>
         <p class="link1"><a href="%s">Run back the way you came!</a></p>
         <p class="link2"><a href="%s">Run into the woods!</a></p>
         """ % (option11, health, url_for('static', filename='option111'), url_for('static', filename='option112'))
@@ -249,6 +250,8 @@ def option11():
 @app.route('/static/option111')
 def option111():
     global health
+    health = health - 60
+
     option111 = """
         <body>
         <style>
@@ -263,8 +266,12 @@ def option111():
         <p>With the giant eels in hot persuit, you run past the large rock where you found the hatchet. The pile of apples
         still sits upon it. Looking back, you notice one of the flesh-hungry eels inspecting the apples.</p>
         <p><font size="10" color="red">BOOM</font></p>
+        <p>You are knocked off your feet. <font color="red">(Health - 60)</font>
         <p>Apparently there was some kind of explosive device under that pile of apples because all the giant man-eating eels
         just blew to freaking smithereens!</p>
+        <p>Unfortunately, the blast has dealt quite a bit of damage to your body. The hatchet is lodged deep into your left leg
+        and your foot appears to be missing. It really sucks not having both feet, but you're also losing quite a bit of blood.</p>
+        <p>Should you seek medical attention or attempt to locate your missing foot?</p>
         </div>
         </body>
         """
@@ -291,11 +298,62 @@ def option111():
         <div id="wrapper">
         <p class="text">%s</p>
         <p class="healthval"><font color="green">Health: %i</font></p>
-        """ % (option111, health)
+        <p class="link1"><a href="%s">Search for a medical facility.</a></p>
+        <p class="link2"><a href="%s">Look for foot.</a></p>
+        """ % (option111, health, url_for('static', filename='option121'), url_for('static', filename='option1112'))
+
+@app.route('/static/option1112')
+def option1112():
+    global health
+    health = health - 38
+
+    option1112 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>You crawl around on the ground in search of your missing foot. You trip and fall into the blast crater. It's walls
+        are just high enough to prevent you from being able to climb out.</p>
+        <p>In a pool of bloody eel remains, you slowly bleed to death from your wounds. <font color="red">(Health - 38)</font></p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="red">Health: %i</font></p>
+        <p>You have died.
+        The end.</p>
+        """ % (option1112, health)
 
 @app.route('/static/option112')
 def option112():
     global health
+    health = health - 200
     option112 = """
         <body>
         <style>
@@ -306,9 +364,13 @@ def option112():
 
         </style>
         <div id="wrapper">
-        <p>Yay2.</p>
+        <p>You run towards the woods but you realize that there are no woods! It's just a 70 foot concrete wall
+        painted to look like trees! It's all a facade!</p>
+        <p>The eels, the meadow, the town, it was all a game!
+        <p>Cornered, you watch the gigantic flesh eating eels surround you. "Well, this is it," you
+        say to yourself.</p>
+        <p>An eel promptly bites your head off and you die. <font color="red">(Health - 200)</font></p>
 
-        <p>How shall you proceed?!!!!!!!!!</p>
         </div>
         </body>
         """
@@ -334,7 +396,8 @@ def option112():
         </style>
         <div id="wrapper">
         <p class="text">%s</p>
-        <p class="healthval"><font color="green">Health: %i</font></p>
+        <p class="healthval"><font color="red">Health: %i</font></p>
+        <p>The end.</p>
         """ % (option112, health)
 
 @app.route('/static/option12')
@@ -447,7 +510,7 @@ def option121():
         <p class="link2"><a href="%s">Continue...</a></p>
         """ % (option121, health, url_for('static', filename='hosp1'))
 
-    if mushroom == 0:
+    else:
         return """
         <body>
         <style>
@@ -488,11 +551,10 @@ def hosp1():
         </style>
         <div id="wrapper">
         <p>You wake up, unable to tell how much time has elapsed since you passed out.
-        A doctor comes in to check on you, notices you have awakened, and so sits down beside you. They
+        A doctor comes in to check on you, notices you have awakened, and sits down beside you. They
         say your immune system has been severely damaged, most likely due to poisoning by ingesting
-        a particular type of wild mushroom, and that you also have salmonellosis.  </p>
-
-        <p>How shall you proceed?!!!!!!!!!</p>
+        a particular type of wild mushroom, and that you also have a serious case of salmonellosis.</p>
+        <p>
         </div>
         </body>
         """
@@ -524,6 +586,7 @@ def hosp1():
 @app.route('/static/hosp2')
 def hosp2():
     global health
+    health = health - 38
     hosp2 = """
         <body>
         <style>
@@ -534,9 +597,21 @@ def hosp2():
 
         </style>
         <div id="wrapper">
-        <p>hosp2</p>
-
-        <p>How shall you proceed?!!!!!!!!!</p>
+        <p>You wake up, unable to tell how much time has elapsed since you passed out.
+        A doctor comes in to check on you, notices you have awakened, and sits down beside you.
+        They say you've been through hours of surgery and they had to amputate all of your limbs.
+        Shocked, you attempt to shout, <i>"But only two of my limbs were damaged!"</i> But nothing
+        comes out. The doctor explains that due to a bite from a particular breed of poisonous eel, you
+        have also been rendered completely paralyzed.</p>
+        <p>They also say that since you have no medical insurance, you will have to pay the bill by
+        selling your spare organs. This may include a kidney, a lung, several feet of intestine, a few gallons of blood,
+        and some brain tissue.</p>
+        <p>You lie there, unable to move, unable to speak. A tear wells up in your eye.</p>
+        <p>"Oh, we'll also need to take one of your eyes," the doctor adds.</p>
+        <p>You spend the rest of your life paralyzed and bed-ridden, slowly being butchered until your body can no
+        longer sustain life. <font color="red">(Health - 38)</font></p>
+        If only you had eaten that mushroom, your life may have turned out better. Oh, well.</p>
+        <p>You die of
         </div>
         </body>
         """
