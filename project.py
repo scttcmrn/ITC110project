@@ -6,6 +6,7 @@ app.secret_key = 'This is really unique and secret'
 
 personne = ''
 health = 100
+mushroom = 0
 hatchet = 0
 
 @app.route('/')
@@ -136,6 +137,10 @@ def intro():
 
 @app.route('/static/option1')
 def option1():
+    global health
+    global hatchet
+    hatchet = hatchet + 1
+
     option1 = """
         <body>
         <style>
@@ -192,6 +197,8 @@ def option1():
 
 @app.route('/static/option11')
 def option11():
+    global health
+    health = health - 1
 
     option11 = """
         <body>
@@ -203,9 +210,12 @@ def option11():
 
         </style>
         <div id="wrapper">
-        <p>It's clean. Yay.</p>
-
-        <p>How shall you proceed?!!!!!!!!!</p>
+        <p>You near the river and dip your hand and hatchet into the current to rid both of the accumulated fecal matter.</p>
+        <p>Ouch. <font color="red">(Health - 1)</font> Something just nibbled your fingertip. What was that?</p>
+        <p><font size="10">OH GOD, EELS!</font></p>
+        <p>A group of massive, man-eating eels emerges from the river! You run for dear life as they chase you across the
+        meadow.</p>
+        <p>Do you run back they way you came, or do you run into the thick woods?</p>
         </div>
         </body>
         """
@@ -232,13 +242,13 @@ def option11():
         <div id="wrapper">
         <p class="text">%s</p>
         <p class="healthval"><font color="green">Health: %i</font></p>
-        <p class="link1"><a href="%s">option111</a></p>
-        <p class="link2"><a href="%s">option112</a></p>
+        <p class="link1"><a href="%s">Run back the way you came!</a></p>
+        <p class="link2"><a href="%s">Run into the woods!</a></p>
         """ % (option11, health, url_for('static', filename='option111'), url_for('static', filename='option112'))
 
 @app.route('/static/option111')
 def option111():
-
+    global health
     option111 = """
         <body>
         <style>
@@ -249,9 +259,12 @@ def option111():
 
         </style>
         <div id="wrapper">
-        <p>Yay.</p>
-
-        <p>How shall you proceed?!!!!!!!!!</p>
+        <p>You decide it's best to run back the way you came.</p>
+        <p>With the giant eels in hot persuit, you run past the large rock where you found the hatchet. The pile of apples
+        still sits upon it. Looking back, you notice one of the flesh-hungry eels inspecting the apples.</p>
+        <p><font size="10" color="red">BOOM</font></p>
+        <p>Apparently there was some kind of explosive device under that pile of apples because all the giant man-eating eels
+        just blew to freaking smithereens!</p>
         </div>
         </body>
         """
@@ -282,7 +295,7 @@ def option111():
 
 @app.route('/static/option112')
 def option112():
-
+    global health
     option112 = """
         <body>
         <style>
@@ -327,6 +340,8 @@ def option112():
 @app.route('/static/option12')
 def option12():
     global personne
+    global mushroom
+    mushroom = mushroom + 1
     global health
     health = health - 25
 
@@ -342,9 +357,10 @@ def option12():
         <div id="wrapper">
         <p>It tastes like the black death.</p>
         <p>You suddenly feel like your internal organs are on fire.</p>
-        <p>You vommit approximately 13 times. <font color="red">(Health - 25)</font></p>
-        <p>You realize that you just ate a poisonous mushroom.<p>
-        <p>Your visoon blurrs. Your body aches. Is this the end?</p>
+        <p>You vomit approximately 13 times. <font color="red">(Health - 25)</font></p>
+        <p>You realize that you just ate a poisonous mushroom. Why on Earth did you think
+        that was a good idea?<p>
+        <p>Your vision blurs. Your body aches. Is this the end?</p>
         <p>Nope, you still have like, 74 health left!</p>
         </div>
         </body>
@@ -373,7 +389,272 @@ def option12():
         <p class="text">%s</p>
         <p class="healthval"><font color="green">Health: %i</font></p>
         <p class="see">See? You're not dying, just horribly ill! What are you going to do about it?</p>
-        """ % (option12, health)
+        <p class="link1"><a href="%s">Seek medical attention.</a></p>
+        <p class="link2"><a href="%s">Nothing.</a></p>
+        """ % (option12, health, url_for('static', filename='option121'), url_for('static', filename='option122'))
+
+@app.route('/static/option121')
+def option121():
+    global health
+    option121 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>You stumble back into town and head in the direction of the local hospital.
+        As you approach the hospital, you can see a sign hanging on the door that reads, "CLOSED."</p>
+        <p>What? Since when do hospitals close?</p>
+        <p>You inspect the signage above the door. Oh, it's an animal hospital.</p>
+        <p>You limp your way down the street in search of the actual hospital and, lucky for you, a
+        kind stranger provides you with some assistance. The stranger informs you that the real hospital
+        and the animal hospital are accross the street from each other.
+        <p>Three hours later, you find the actual hospital. You approach the front desk and attempt to
+        describe your ailment.</p>
+        <p>Everyone around you goes wide eyed and a nurse quickly ushers you into a room with a bed. After
+        laying down on the bed you start to feel sleepy...
+        </div>
+        </body>
+        """
+    if mushroom == 1:
+        return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="green">Health: %i</font></p>
+        <p class="link2"><a href="%s">Continue...</a></p>
+        """ % (option121, health, url_for('static', filename='hosp1'))
+
+    if mushroom == 0:
+        return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="green">Health: %i</font></p>
+        <p class="link2"><a href="%s">Continue...</a></p>
+        """ % (option121, health, url_for('static', filename='hosp2'))
+
+@app.route('/static/hosp1')
+def hosp1():
+    global health
+    hosp1 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>You wake up, unable to tell how much time has elapsed since you passed out.
+        A doctor comes in to check on you, notices you have awakened, and so sits down beside you. They
+        say your immune system has been severely damaged, most likely due to poisoning by ingesting
+        a particular type of wild mushroom, and that you also have salmonellosis.  </p>
+
+        <p>How shall you proceed?!!!!!!!!!</p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="green">Health: %i</font></p>
+        """ % (hosp1, health)
+
+@app.route('/static/hosp2')
+def hosp2():
+    global health
+    hosp2 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>hosp2</p>
+
+        <p>How shall you proceed?!!!!!!!!!</p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="green">Health: %i</font></p>
+        """ % (hosp2, health)
+
+@app.route('/static/option122')
+def option122():
+    global health
+    option122 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>Seriously? You're violently ill and you want to to nothing?</p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="green">Health: %i</font></p>
+        <p class="link1"><a href="%s">Yeah.</a></p>
+        <p class="link1"><a href="%s">Okay, maybe not.</a></p>
+        """ % (option122, health, url_for('static', filename='option1221'), url_for('static', filename='option121'))
+
+@app.route('/static/option1221')
+def option1221():
+    global health
+    health = health - 74
+    option1221 = """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+
+        </style>
+        <div id="wrapper">
+        <p>Sigh...</p>
+        <p>OK.</p>
+        <p>You decide to do nothing.</p>
+        <p><font size="16">You do nothing for the rest of your life until you
+        literally die of boredom. THE END.</p>
+        </div>
+        </body>
+        """
+    return """
+        <body>
+        <style>
+        #wrapper{
+        width:640px;
+        margin:0 auto;
+        }
+        .text{
+        width:640px;
+        margin:0 auto;
+        }
+        .link1{
+        width:640px;
+        margin:0 auto;
+        }
+        .link2{
+        width:640px;
+        margin:0 auto;
+        }
+        </style>
+        <div id="wrapper">
+        <p class="text">%s</p>
+        <p class="healthval"><font color="red">Health: ZERO</font></p>
+        """ % (option1221)
 
 @app.route('/static/option2')
 def option2():
